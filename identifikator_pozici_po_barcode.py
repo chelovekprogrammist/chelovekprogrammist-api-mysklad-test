@@ -2,7 +2,7 @@ import requests
 import os
 
 def find_product_id(barcode):
-    mySklad_api_key = os.getenv('MY_SKLAD_API_KEY')
+    mySklad_api_key = os.environ.get('MY_SKLAD_API_KEY')
     
     headers = {
         "Content-Type": "application/json",

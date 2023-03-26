@@ -2,8 +2,8 @@ import json
 import requests
 import os
 
-client_id = os.getenv("SELLER_ID")
-api_key = os.getenv("OZON_API_KEY")
+client_id = os.environ.get("SELLER_ID")
+api_key = os.environ.get("OZON_API_KEY")
 
 def handle_response(data):
     # Получаем тип сообщения

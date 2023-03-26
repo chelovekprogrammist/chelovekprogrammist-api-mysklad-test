@@ -5,7 +5,7 @@ import os
 
 
 def send_to_mySklad(id_produkt, quantity, price, posting_number, warehouse_id_number, shipment_date):
-    mySklad_api_key = os.getenv('MY_SKLAD_API_KEY')
+    mySklad_api_key = os.environ.get('MY_SKLAD_API_KEY')
     url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder"
 
     # Изменяем формат даты и времени
