@@ -3,6 +3,7 @@ from response_handler import handle_response, get_product_info,get_shipping_info
 from resend_mySklad import send_to_mySklad
 from identifikator_pozici_po_barcode import find_product_id
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -17,7 +18,7 @@ def receive_ping():
         response_data = {
             "version": "1.0",
             "name": "MyApp",
-            "time": "2023-03-17T14:15:22Z"
+            "time": datetime.now()
         }
         return json.dumps(response_data), 200
 
