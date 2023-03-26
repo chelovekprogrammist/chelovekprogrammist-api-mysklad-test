@@ -5,25 +5,32 @@ from identifikator_pozici_po_barcode import find_product_id
 import json
 from datetime import datetime
 
+
 app = Flask(__name__)
 
 # задаем декоратор маршрутизации и обрабатываем POST запросы на этот маршрут
 
 @app.route('/', methods=['POST'])
+
 def receive_ping():
     data = request.json
     print("Received data: ", json.dumps(data, indent=4))
 
     if "message_type" in data and data["message_type"] == "TYPE_PING":
+
+        now = datetime.now()
+        # Форматируем дату и время в строку
+        time_string = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+
         response_data = {
             "version": "1.0",
             "name": "MyApp",
-            "time": datetime.now()
+            "time": time_string
         }
         return json.dumps(response_data), 200
 
-    elif "message_type" in data:
-        # обрабатываем любое другое сообщение
+    elif "message_type" in data and data["message_type"] == "TYPE_NEW_POSTING":
+        # обрабатываем если сообщение о новом заказе
         response_data = {"result": True}
 
         # Получаем данные заказа
@@ -36,7 +43,8 @@ def receive_ping():
 
         posting_number = data['posting_number']                        # Получаем номер отправления
         shipping_info = get_shipping_info_by_id(posting_number)        # Получаю информацию об отправвления
-        shipping_info_json = shipping_info.json()                      # Дешифровывает ответ в формат json
+        shipping_info_json = shipping_info.json()
+        print("_____________________",shipping_info_json  )                      # Дешифровывает ответ в формат json
         price = shipping_info_json['result']['products'][0]['price']   # Вытаскиваем Получаем цену из отправления 
 
         # Склад отгрузки
@@ -60,6 +68,7 @@ def receive_ping():
         return json.dumps(response_data), 200
          
     elif "message_type" in data:
+         # обрабатываем любое другое сообщение
 
         return json.dumps(response_data), 200
 
