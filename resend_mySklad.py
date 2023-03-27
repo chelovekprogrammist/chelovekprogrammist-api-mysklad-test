@@ -1,6 +1,6 @@
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 
@@ -11,11 +11,15 @@ def send_to_mySklad(id_produkt, quantity, price, posting_number, warehouse_id_nu
     # Изменяем формат даты и времени
     # Преобразование в объект datetime
     dt = datetime.fromisoformat(shipment_date.replace('Z', '+00:00'))
+    # Создаем объект timedelta с количеством часов, на которое нужно задвинуть время
+    hours_to_add = 3
+    delta = timedelta(hours=hours_to_add)
+
+    # Добавляем timedelta к объекту datetime, чтобы задвинуть время на указанное количество часов
+    dt_new = dt + delta
 
     # Преобразование в нужный формат
-    shipment_date = dt.strftime('%Y-%m-%d %H:%M:%S')
-
-    print(shipment_date) # "2023-02-28 13:00:00"
+    shipment_date = dt_new.strftime('%Y-%m-%d %H:%M:%S')
 
 
     headers = {
