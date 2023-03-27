@@ -17,12 +17,7 @@ def send_to_mySklad(id_produkt, quantity, price, posting_number, warehouse_id_nu
 
     # Добавляем timedelta к объекту datetime, чтобы задвинуть время на указанное количество часов
     dt_new = dt + delta
-    
-    print(dt) # Проверяем, что dt имеет правильное значение
-    print(delta) # Проверяем, что delta имеет правильное значение
-    print(dt_new) # Проверяем, что dt_new имеет правильное значение
-
-
+ 
     # Преобразование в нужный формат
     shipment_date = dt_new.strftime('%Y-%m-%d %H:%M:%S')
 
